@@ -3,7 +3,7 @@ const app = express();
 const router=require("./mainRouter")
 app.use(express.json())
 app.use(router)
-
+require("dotenv").config();
 
 
 

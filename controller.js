@@ -1,6 +1,10 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const {db,roles}=require("./models");
+const { JsonWebTokenError } = require("jsonwebtoken");
+const { options } = require("./mainRouter");
 
 
 
@@ -26,8 +30,41 @@ const register = async (user) => {
     }
   
   };
+//************************************************************* */
+  // for all
+const login = async (user) => {
+  const savedUser = db.filter((u) => u.email == user.email);
+  console.log("user",savedUser[0])
+  if (savedUser.length) {
+    if (await bcrypt.compare(user.password, savedUser[0].password)) {
 
-  module.exports = {
+    const permissions = roles.filter((role) => role.id === savedUser[0].roleId);
+    const payload = {
+      email: savedUser[0].email,
+      permissions: permissions[0].permissions,
+    }
+    // console.log("pay",payload)
+    const options = {
+      expiresIn: process.env.TOKEN_EXPIRATION,
+    };
+
+    console.log('process.env.SECRET',process.env.SECRET);
+  
+    
+    return await jwt.sign(payload,process.env.SECRET,options)
+    }
+    else{
+      return "Invalid login check your password"
+    }
+
+  }
+else { return "Invalid login check your email";
+}
+
+}
+
+module.exports = {
       getall,
-      register
+      register,
+      login
     }
