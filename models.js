@@ -12,7 +12,7 @@ const db = [
       email: "ali1@gmail.com",
     //   password: "ali123",
      password:
-        "$2b$10$D.rxrvzlvDVfnHUfEBv2H.CDtgbu.QAJCDmyLmVQ4iy/aF67gajbe",
+        "$2b$10$i2flqjUC4LetKjtG3I6ZrOI3J4WNf.BQreLQSZCoHsNi9JzP4Rl4m",
       roleId: 1,
     },
     {
@@ -21,7 +21,7 @@ const db = [
       email: "hadeel2@gmail.com",
     //   password: "hadeel123",
      password:
-        "$2b$10$t3/pySs5ZcEOLQjhPoeyk.dZpyccuFHmnn2PWeGXD.cUhgwGiavlm",
+        "$2b$10$FT2najAAzZ3sPBz9J1YN8uEYzKL3nObvvhMN8xMZVwyu1RdJkm/Uy",
       roleId: 1,
     },
     {
@@ -31,7 +31,7 @@ const db = [
       class: "fourth",
     //   password: "ahmad123",
     password:
-        "$2b$10$cjoIrtXRqx12C0lAafAxDONFnsnOA3112quS6tFWt3wCIkHhbu5vW",
+        "$2b$10$Jpd890VfV8hJSqZpOvn1Ye7RIh5eluWZG.ujTWW7JSR50cnPaIG.y",
       roleId: 3,
     },
     {
@@ -40,7 +40,7 @@ const db = [
       email: "sara1@gmail.com",
     //   password: "sara123",
       password:
-        "$2b$10$qEPNOcrkdQlNhnz.uLf6KO3fyR44pWRhjTPYgpBsYHrXRoSwAIJlm",
+        "$2b$10$fXMeW/fUQ3jFRErM2Hz3G.aBBXD7oM33AP6/zQB1nKkFYkjhlF9gy",
       material: "",
       time: "",
       roleId: 2,
@@ -51,7 +51,7 @@ const db = [
       email: "omar@gmail.com",
     //   password: "omar123",
       password:
-        "$2b$10$BynPBR5Lql6hSR27DwoUpu/F09Pi78mbFtKmS125.6PB/.jHJN2Sa",
+        "$2b$10$g.onfYfQNagZ6QPg1YJp2.xmQG4PqqG1pRrwxmTPcUPtT62R1UOey",
       material: "math",
       time: "10-11",
       roleId: 2,
@@ -63,7 +63,7 @@ const db = [
       class: "tawjihi",
     //   password: "lina123",
       password:
-        "$2b$10$xQ5Pe.vodfp8QEMwn/8DVuQPPwbe1WTgeXkPLXhUQwiWD4.CkObFK",
+        "$2b$10$I/8H6eVHWRHWHgsFs6M.1e/IrfQs853ObasRVddTxoaoFDoeOGPZq",
       roleId: 3,
     },
   ];

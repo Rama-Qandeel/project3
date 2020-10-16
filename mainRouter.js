@@ -1,5 +1,5 @@
 const express = require("express");
-const {getall}=require("./controller");
+const {getall,register}=require("./controller");
 const authRouter=express.Router();
 
 authRouter.get("/get", async (req, res) => {
@@ -7,10 +7,18 @@ authRouter.get("/get", async (req, res) => {
     try {
       res.json(await getall());
     } catch (err) {
-      throw err;
+      res.status(404)
+      throw res.json("Data base not found");
     }
   });
-
+//add new manager 
+authRouter.post("/createmanager", async (req, res) => {
+  try {
+    res.json(await register(req.body));
+  } catch (err) {
+    throw err;
+  }
+});
 
 
 
