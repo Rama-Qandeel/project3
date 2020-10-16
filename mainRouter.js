@@ -3,7 +3,7 @@ const {getall}=require("./controller");
 const authRouter=express.Router();
 
 authRouter.get("/get", async (req, res) => {
-    res.json("hi")
+    // res.json("hi")
     try {
       res.json(await getall());
     } catch (err) {
