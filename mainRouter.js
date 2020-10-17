@@ -67,6 +67,18 @@ authRouter.put("/protect/update",middleware3,async (req, res, next) => {
   }
 });
 //********************************************** */
-
+authRouter.all("*", (req, res, next) => {
+  const newErr = new Error("not found req");
+  newErr.status = 404;
+  next(newErr);
+});
+const handleAllNotExist = (err, req, res, next) => {
+  res.status(err.status).json({
+    error: {
+      message: err.message,
+    },
+  });
+};
+authRouter.use(handleAllNotExist);
 
   module.exports = authRouter;

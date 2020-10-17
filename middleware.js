@@ -39,9 +39,6 @@ const middleware2=async (req, res, next) => {
 
 
   jwt.verify(token, process.env.SECRET, (err,parsedToken) => {
-  //  console.log('parsedToken.id',parsedToken.id);
-  //  console.log('error',err);
-
    if(err==null){
    const r=parsedToken.id;
    if (r!==1 && r!==2){
