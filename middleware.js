@@ -72,8 +72,8 @@ const middleware3 = async (req, res, next) => {
         next();
       }
     }
-    if (err) res.send("Login failed. Please re-enter your name and password");
-    {
+    if (err) { 
+      res.send("Login failed. Please re-enter your name and password");
     }
     if (parsedToken) {
       next();
