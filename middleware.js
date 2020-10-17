@@ -31,8 +31,6 @@ const middleware=async (req, res, next) => {
 
 };
 
-
-
 const middleware2=async (req, res, next) => {
   if (!req.headers.authorization) {
     res.send("login first");
@@ -46,9 +44,34 @@ const middleware2=async (req, res, next) => {
 
    if(err==null){
    const r=parsedToken.id;
+   if (r!==1 && r!==2){
+     res.status(401);
+     res.send("you can not add new user or delete")
+     next()
+  }
+}
+    if (err) res.send("finished time");{}
+    if (parsedToken) {
+      next();
+      return ;
+    }
+  });
+
+};
+const middleware3=async (req, res, next) => {
+  if (!req.headers.authorization) {
+    res.send("login first");
+  }
+  const token = req.headers.authorization.split(" ").pop();
+
+
+  jwt.verify(token, process.env.SECRET, (err,parsedToken) => {
+   if(err==null){
+   const r=parsedToken.id;
    if (r!==1){
      res.status(401);
-     res.send("you can not add new user ")
+     res.send("you can not update informatin" +'\n'+
+     "your permissions just : "+'\n'+JSON.stringify(parsedToken.permissions))
      next()
   }
 }
@@ -61,5 +84,5 @@ const middleware2=async (req, res, next) => {
 
 };
 module.exports = {
-  middleware,middleware2
+  middleware,middleware2,middleware3
 }

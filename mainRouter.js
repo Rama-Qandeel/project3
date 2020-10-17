@@ -1,7 +1,7 @@
 const express = require("express");
-const {getall,register,login,adduser,deleteuser}=require("./controller");
+const {getall,register,login,adduser,deleteuser,updateinfo}=require("./controller");
 const authRouter=express.Router();
-const{ middleware,middleware2}=require("./middleware")
+const{ middleware,middleware2,middleware3}=require("./middleware")
 
 
 // authRouter.get("/getall",async (req, res) => {
@@ -57,10 +57,16 @@ authRouter.delete("/protect/deleteuser",middleware2 ,async (req, res) => {
     throw err;
   }
 });
+//********************************************************** */
+authRouter.put("/protect/update",middleware3,async (req, res, next) => {
 
-
-
-
+  try {
+    res.json(await updateinfo(req.body));
+  } catch (err) {
+    throw err;
+  }
+});
+//********************************************** */
 
 
   module.exports = authRouter;

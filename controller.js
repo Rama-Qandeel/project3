@@ -119,17 +119,31 @@ const deleteuser = (user) => {
   }
 };
 //*************************************************************** */
+const updateinfo = (user) => {
+  let add = db.filter((teacher) => {
+    return teacher.email == user.email;
+  });
+  if (add) {
+    db.forEach((teacher, i) => {
+      if (teacher.email == user.email) {
+        db[i].material = user.material;
+        db[i].time = user.time;
+      }
+    });
+  }
+  return "The information was added successfully";
+};
 
 
 
 
 
-
-
+//************************************************************** */
 module.exports = {
       getall,
       register,
       login,
       adduser,
-      deleteuser
+      deleteuser,
+      updateinfo
     }
