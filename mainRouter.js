@@ -1,5 +1,5 @@
 const express = require("express");
-const {getall,register,login,adduser}=require("./controller");
+const {getall,register,login,adduser,deleteuser}=require("./controller");
 const authRouter=express.Router();
 const{ middleware,middleware2}=require("./middleware")
 
@@ -30,6 +30,7 @@ authRouter.get("/login", async (req, res) => {
     throw err;
   }
 });
+//********************************************************* */
 authRouter.get("/protect",middleware ,async (req, res) => {
   try {
     res.json(await getall(req.body));
@@ -38,6 +39,7 @@ authRouter.get("/protect",middleware ,async (req, res) => {
     throw res.json("Data Base not found");
   }
 });
+//********************************************************* */
 authRouter.post("/protect/creatuser",middleware2,async (req, res) => {
   try {
     res.json(await adduser(req.body));
@@ -46,6 +48,19 @@ authRouter.post("/protect/creatuser",middleware2,async (req, res) => {
     throw err;
   }
 });
+
+//****************************************************** */
+authRouter.delete("/protect/deleteuser",middleware2 ,async (req, res) => {
+  try {
+    res.json(await deleteuser(req.body));
+  } catch (err) {
+    throw err;
+  }
+});
+
+
+
+
 
 
   module.exports = authRouter;

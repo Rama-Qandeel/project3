@@ -106,9 +106,19 @@ const adduser = async (user) => {
   }
 };
 
-
-
-
+//************************************************************ */
+const deleteuser = (user) => {
+  const deletuser=db.filter((u)=> u.email == user.email )
+  if (deletuser.length){
+   
+    // return deleteuser
+    return "The user was deleted" 
+  }
+  else {
+     return "The user not defined";
+  }
+};
+//*************************************************************** */
 
 
 
@@ -120,5 +130,6 @@ module.exports = {
       getall,
       register,
       login,
-      adduser
+      adduser,
+      deleteuser
     }
