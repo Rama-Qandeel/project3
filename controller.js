@@ -18,13 +18,26 @@ const getall = (user) => {
         
        else if (dball[0].roleId===2){ 
         const student = db.filter((user) => user.roleId === 3);
+        student.forEach((student) => {
+          delete student.password;
+          delete student.roleId;
+        });
+        
       return { students: student };
       }
       else{
-        
-      }
+        let result = [user.material];
+        db.forEach((m) => {
+          if (m.material == user.material) {
+            const time = { username: m.username, time: m.time };
+            result.push(time);
+          }
+      })
+return result
+    }
+  }
 
-  };
+
 //***************************************************************** */
 // just manager reg
 const register = async (user) => {

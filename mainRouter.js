@@ -35,7 +35,7 @@ authRouter.get("/protect",middleware ,async (req, res) => {
     res.json(await getall(req.body));
   } catch (err) {
     res.status(404)
-    throw res.json("Data base not found");
+    throw res.json("Data Base not found");
   }
 });
 

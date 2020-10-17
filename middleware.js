@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
 
 
   jwt.verify(token, process.env.SECRET, (err, parsedToken) => {
-   console.log('parsedToken.id',parsedToken.id);
+  //  console.log('parsedToken.id',parsedToken.id);
   //  console.log('error',err);
    
    if(err==null){
