@@ -5,9 +5,6 @@ const { db, roles } = require("./models");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const { options } = require("./mainRouter");
 
-
-
-
 const getall = (user) => {
   // console.log("user", user);
   const dball = db.filter((u) => u.email == user.email);
@@ -121,6 +118,24 @@ const updateinfo = (user) => {
 };
 
 //************************************************************* */
+
+const search = (user) => {
+  const getinformation = db.filter(
+    (u) => u.username == user.username && u.email == user.email
+  );
+  // console.log('getinformation',getinformation);
+
+  if (getinformation.length) {
+    return {
+      username: getinformation[0].username,
+      class: getinformation[0].class,
+    };
+  }
+  {
+    return "not found";
+  }
+};
+
 module.exports = {
   getall,
   register,
@@ -128,4 +143,5 @@ module.exports = {
   adduser,
   deleteuser,
   updateinfo,
+  search,
 };

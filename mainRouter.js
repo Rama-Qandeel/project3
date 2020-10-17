@@ -6,6 +6,7 @@ const {
   adduser,
   deleteuser,
   updateinfo,
+  search
 } = require("./controller");
 const authRouter = express.Router();
 const { middleware, middleware2, middleware3 } = require("./middleware");
@@ -77,7 +78,14 @@ authRouter.put("/protect/update", middleware3, async (req, res, next) => {
     throw err;
   }
 });
-
+//************************************************************** */
+authRouter.get("/search", async (req, res) => {
+  try {
+    res.json(await search(req.query));
+  } catch (err) {
+    throw err;
+  }
+});
 //************************************************************* */
 authRouter.all("*", (req, res, next) => {
   const newErr = new Error("not found req");
