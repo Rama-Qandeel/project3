@@ -88,7 +88,7 @@ authRouter.get("/search", async (req, res) => {
 });
 //************************************************************* */
 authRouter.all("*", (req, res, next) => {
-  const newErr = new Error("not found req");
+  const newErr = new Error("not found path");
   newErr.status = 404;
   next(newErr);
 });
