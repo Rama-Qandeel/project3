@@ -1,8 +1,14 @@
 const express = require("express");
-const {getall,register,login,adduser,deleteuser,updateinfo}=require("./controller");
-const authRouter=express.Router();
-const{ middleware,middleware2,middleware3}=require("./middleware")
-
+const {
+  getall,
+  register,
+  login,
+  adduser,
+  deleteuser,
+  updateinfo,
+} = require("./controller");
+const authRouter = express.Router();
+const { middleware, middleware2, middleware3 } = require("./middleware");
 
 // authRouter.get("/getall",async (req, res) => {
 //     // res.json("hi")
@@ -13,7 +19,9 @@ const{ middleware,middleware2,middleware3}=require("./middleware")
 //       throw res.json("Data base not found");
 //     }
 //   });
-//add new manager 
+
+//************************************************************* */
+//add new manager
 authRouter.post("/register", async (req, res) => {
   try {
     res.json(await register(req.body));
@@ -21,7 +29,8 @@ authRouter.post("/register", async (req, res) => {
     throw err;
   }
 });
-//************************************************************** */
+
+//************************************************************* */
 //for all
 authRouter.get("/login", async (req, res) => {
   try {
@@ -30,17 +39,19 @@ authRouter.get("/login", async (req, res) => {
     throw err;
   }
 });
-//********************************************************* */
-authRouter.get("/protect",middleware ,async (req, res) => {
+
+//************************************************************* */
+authRouter.get("/protect", middleware, async (req, res) => {
   try {
     res.json(await getall(req.body));
   } catch (err) {
-    res.status(404)
+    res.status(404);
     throw res.json("Data Base not found");
   }
 });
-//********************************************************* */
-authRouter.post("/protect/creatuser",middleware2,async (req, res) => {
+
+//************************************************************* */
+authRouter.post("/protect/creatuser", middleware2, async (req, res) => {
   try {
     res.json(await adduser(req.body));
     // res.json("hiiiiiiiiiiiiiiiiiiiiiiii")
@@ -49,24 +60,25 @@ authRouter.post("/protect/creatuser",middleware2,async (req, res) => {
   }
 });
 
-//****************************************************** */
-authRouter.delete("/protect/deleteuser",middleware2 ,async (req, res) => {
+//************************************************************* */
+authRouter.delete("/protect/deleteuser", middleware2, async (req, res) => {
   try {
     res.json(await deleteuser(req.body));
   } catch (err) {
     throw err;
   }
 });
-//********************************************************** */
-authRouter.put("/protect/update",middleware3,async (req, res, next) => {
 
+//************************************************************* */
+authRouter.put("/protect/update", middleware3, async (req, res, next) => {
   try {
     res.json(await updateinfo(req.body));
   } catch (err) {
     throw err;
   }
 });
-//********************************************** */
+
+//************************************************************* */
 authRouter.all("*", (req, res, next) => {
   const newErr = new Error("not found req");
   newErr.status = 404;
@@ -81,4 +93,4 @@ const handleAllNotExist = (err, req, res, next) => {
 };
 authRouter.use(handleAllNotExist);
 
-  module.exports = authRouter;
+module.exports = authRouter;
