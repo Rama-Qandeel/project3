@@ -89,9 +89,36 @@ else { return "Invalid login check your email";
 }
 
 }
+//************************************************************/
+const adduser = async (user) => {
+  // console.log("user", user);
+  // console.log("user.password", user.password);
+  const newuser = db.filter((u) => u.email === user.email);
+  if (!newuser.length) {
+    user.password = await bcrypt.hash(
+      user.password,
+      Number(process.env.SALT)
+    );
+    db.push(user);
+    return "new user has been created";
+  } else {
+    return "user already exists";
+  }
+};
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
       getall,
       register,
-      login
+      login,
+      adduser
     }

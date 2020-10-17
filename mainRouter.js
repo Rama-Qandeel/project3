@@ -1,18 +1,18 @@
 const express = require("express");
-const {getall,register,login}=require("./controller");
+const {getall,register,login,adduser}=require("./controller");
 const authRouter=express.Router();
-const middleware=require("./middleware")
+const{ middleware,middleware2}=require("./middleware")
 
 
-authRouter.get("/getall",async (req, res) => {
-    // res.json("hi")
-    try {
-      res.json(await getall());
-    } catch (err) {
-      res.status(404)
-      throw res.json("Data base not found");
-    }
-  });
+// authRouter.get("/getall",async (req, res) => {
+//     // res.json("hi")
+//     try {
+//       res.json(await getall());
+//     } catch (err) {
+//       res.status(404)
+//       throw res.json("Data base not found");
+//     }
+//   });
 //add new manager 
 authRouter.post("/register", async (req, res) => {
   try {
@@ -38,7 +38,14 @@ authRouter.get("/protect",middleware ,async (req, res) => {
     throw res.json("Data Base not found");
   }
 });
-
+authRouter.post("/protect/creatuser",middleware2,async (req, res) => {
+  try {
+    res.json(await adduser(req.body));
+    // res.json("hiiiiiiiiiiiiiiiiiiiiiiii")
+  } catch (err) {
+    throw err;
+  }
+});
 
 
   module.exports = authRouter;
