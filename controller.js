@@ -9,8 +9,21 @@ const { options } = require("./mainRouter");
 
 
 
-const getall = () => {
-      return db;
+const getall = (user) => {  
+  console.log('user',user);
+  
+  const dball=db.filter((u)=>u.email==user.email)
+      if (dball[0].roleId===1){  
+        return db;}
+        
+       else if (dball[0].roleId===2){ 
+        const student = db.filter((user) => user.roleId === 3);
+      return { students: student };
+      }
+      else{
+        
+      }
+
   };
 //***************************************************************** */
 // just manager reg
@@ -42,6 +55,7 @@ const login = async (user) => {
     const payload = {
       email: savedUser[0].email,
       permissions: permissions[0].permissions,
+      id:permissions[0].id
     }
     // console.log("pay",payload)
     const options = {
