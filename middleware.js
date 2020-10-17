@@ -16,7 +16,7 @@ const middleware = async (req, res, next) => {
         next();
       }
     }
-    if (err) res.send("finished time");
+    if (err) res.send("Login failed. Please re-enter your name and password");
     {
     }
     if (parsedToken) {
@@ -41,7 +41,7 @@ const middleware2 = async (req, res, next) => {
         next();
       }
     }
-    if (err) res.send("finished time");
+    if (err) res.send("Login failed. Please re-enter your name and password");
     {
     }
     if (parsedToken) {
@@ -70,7 +70,7 @@ const middleware3 = async (req, res, next) => {
         next();
       }
     }
-    if (err) res.send("finished time");
+    if (err) res.send("Login failed. Please re-enter your name and password");
     {
     }
     if (parsedToken) {
