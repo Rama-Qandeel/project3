@@ -1,21 +1,18 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
-const jwt_decode=require("jwt-decode")
+const jwt_decode = require("jwt-decode");
 const jwt = require("jsonwebtoken");
 const { db, roles } = require("./models");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const { options } = require("./mainRouter");
 
-const getall = (user,headers) => {
+const getall = (user, headers) => {
   // console.log("user", user);
-// console.log('token',headers.authorization);
-const token=headers.authorization.split(" ").pop();
-const decode=jwt_decode(token)
-console.log('decode',decode);
+  // console.log('token',headers.authorization);
+  const token = headers.authorization.split(" ").pop();
+  const decode = jwt_decode(token);
+  // console.log('decode',decode);
 
-  // const dball = db.filter((u) => u.roleId == decode.id);
-  // console.log('dball',dball);
-  
   if (decode.id === 1) {
     return db;
   } else if (decode.id === 2) {
