@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const router = require("./mainRouter");
+const mongoose = require("./db");
 app.use(express.json());
 app.use(router);
 require("dotenv").config();
