@@ -6,8 +6,8 @@ const { db, roles } = require("./models");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const { options } = require("./mainRouter");
 const { manager} = require("./users");
-const mongoose = require('mongoose');
-models = mongoose.models;
+
+
 const getall = (user, headers) => {
   // console.log("user", user);
   // console.log('token',headers.authorization);
@@ -117,15 +117,21 @@ const adduser = async (user) => {
 };
 
 //************************************************************ */
+// const deleteuser = (user) => {
+//   const deletuser = db.filter((u) => u.email == user.email);
+//   if (deletuser.length) {
+//     // return deleteuser
+//     return "The user was deleted";
+//   } else {
+//     return "The user not defined";
+//   }
+// };
+//**************************************************************** */
 const deleteuser = (user) => {
-  const deletuser = db.filter((u) => u.email == user.email);
-  if (deletuser.length) {
-    // return deleteuser
-    return "The user was deleted";
-  } else {
-    return "The user not defined";
-  }
+  const deleteUser=manager.deleteOne({email:user.email})
+return deleteUser
 };
+
 
 //************************************************************* */
 const updateinfo = (user) => {

@@ -25,7 +25,6 @@ const { middleware, middleware2, middleware3 } = require("./middleware");
 //add new manager
 authRouter.post("/register", async (req, res) => {
   try {
-  //  const newuser=await register(req.body,res)
     res.json(await register(req.body))
   } catch (err) {
     throw err;
@@ -63,14 +62,21 @@ authRouter.post("/protect/creatuser", middleware2, async (req, res) => {
 });
 
 //************************************************************* */
-authRouter.delete("/protect/deleteuser", middleware2, async (req, res) => {
+// authRouter.delete("/protect/deleteuser", middleware2, async (req, res) => {
+//   try {
+//     res.json(await deleteuser(req.body));
+//   } catch (err) {
+//     throw err;
+//   }
+// });
+/**************************************************************** */
+authRouter.delete("/protect/deleteuser", async (req, res) => {
   try {
     res.json(await deleteuser(req.body));
   } catch (err) {
     throw err;
   }
 });
-
 //************************************************************* */
 authRouter.put("/protect/update", middleware3, async (req, res, next) => {
   try {
