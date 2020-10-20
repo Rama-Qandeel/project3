@@ -25,7 +25,8 @@ const { middleware, middleware2, middleware3 } = require("./middleware");
 //add new manager
 authRouter.post("/register", async (req, res) => {
   try {
-    res.json(await register(req.body));
+  //  const newuser=await register(req.body,res)
+    res.json(await register(req.body))
   } catch (err) {
     throw err;
   }

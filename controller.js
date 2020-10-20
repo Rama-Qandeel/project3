@@ -5,7 +5,9 @@ const jwt = require("jsonwebtoken");
 const { db, roles } = require("./models");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const { options } = require("./mainRouter");
-
+const { manager} = require("./users");
+const mongoose = require('mongoose');
+models = mongoose.models;
 const getall = (user, headers) => {
   // console.log("user", user);
   // console.log('token',headers.authorization);
@@ -37,20 +39,39 @@ const getall = (user, headers) => {
 
 //************************************************************* */
 // just manager reg
-const register = async (user) => {
-  const newuser = db.filter((manager) => manager.email === user.email);
-  if (!newuser.length) {
-    user.password = await bcrypt.hash(user.password, Number(process.env.SALT));
-    user.roleId = 1;
-    db.push(user);
-    // return "new manager has been created";
-    return user;
-  } else {
-    return "user already exists";
-  }
-};
+// const register = async (user) => {
+//   const newuser = db.filter((manager) => manager.email === user.email);
+//   if (!newuser.length) {
+//     user.password = await bcrypt.hash(user.password, Number(process.env.SALT));
+//     user.roleId = 1;
+//     db.push(user);
+//     // return "new manager has been created";
+//     return user;
+//   } else {
+//     return "user already exists";
+//   }
+// };
 
 //************************************************************* */
+const register = async (user) => {
+  const newmanager = new manager({
+    email: user.email,
+    username: user.username,
+    password: await bcrypt.hash(user.password, Number(process.env.SALT)),
+    roleid: 1,
+  });
+  
+try{
+const created = await newmanager.save()
+return  "create new user : " + user.username
+}
+catch (err) {
+  return  err;
+}
+
+}
+
+//************************************************************** */
 // for all
 const login = async (user) => {
   const savedUser = db.filter((u) => u.email == user.email);
