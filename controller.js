@@ -116,15 +116,15 @@ const login = async (user) => {
         };
         const token = await jwt.sign(payload, process.env.SECRET, options);
 
-        console.log(token);
+        // console.log(token);
 
         return token;
       } else {
-        console.log("Invalid login check your password");
+        // console.log("Invalid login check your password");
         return "Invalid login check your password";
       }
     } else {
-      console.log("Invalid login check your email");
+      // console.log("Invalid login check your email");
       return "Invalid login check your email";
     }
   });
