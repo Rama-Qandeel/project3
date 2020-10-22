@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { db, roles } = require("./models");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const { options } = require("./mainRouter");
-const { manager} = require("./users");
+const { manager,teacher} = require("./users");
 
 
 const getall = (user, headers) => {
@@ -103,19 +103,37 @@ const login = async (user) => {
 };
 
 //************************************************************* */
-const adduser = async (user) => {
-  // console.log("user", user);
-  // console.log("user.password", user.password);
-  const newuser = db.filter((u) => u.email === user.email);
-  if (!newuser.length) {
-    user.password = await bcrypt.hash(user.password, Number(process.env.SALT));
-    db.push(user);
-    return "new user has been created";
-  } else {
-    return "user already exists";
-  }
-};
+// const adduser = async (user) => {
+//   const newuser = db.filter((u) => u.email === user.email);
+//   if (!newuser.length) {
+//     user.password = await bcrypt.hash(user.password, Number(process.env.SALT));
+//     db.push(user);
+//     return "new user has been created";
+//   } else {
+//     return "user already exists";
+//   }
+// };
+//**************************************************************** */
+const adduser = async (user) => { 
 
+  
+  const newuser = new teacher({
+    email: user.email,
+    username: user.username,
+    password: await bcrypt.hash(user.password, Number(process.env.SALT)),
+    roleid: user.roleid,
+    material:user.material
+  });
+  
+try{
+const created = await newuser.save()
+return  "create new user : " + user.username
+}
+catch (err) {
+  return  err;
+}
+
+}
 //************************************************************ */
 // const deleteuser = (user) => {
 //   const deletuser = db.filter((u) => u.email == user.email);
@@ -135,7 +153,6 @@ return deleteUser
 catch(err){
   throw err
 }
-
  }
 
 
