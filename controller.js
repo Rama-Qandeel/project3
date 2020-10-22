@@ -128,9 +128,16 @@ const adduser = async (user) => {
 // };
 //**************************************************************** */
 const deleteuser = (user) => {
+try{  
   const deleteUser=manager.deleteOne({email:user.email})
 return deleteUser
-};
+}
+catch(err){
+  throw err
+}
+
+ }
+
 
 
 //************************************************************* */
