@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const { db, roles } = require("./models");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const { options } = require("./mainRouter");
-const { manager,teacher} = require("./users");
+const { manager,teacher,student} = require("./users");
 
 
 const getall = (user, headers) => {
@@ -115,14 +115,14 @@ const login = async (user) => {
 // };
 //**************************************************************** */
 const adduser = async (user) => { 
-
-  
+  if(user.roleid==2)
+  {
   const newuser = new teacher({
     email: user.email,
     username: user.username,
     password: await bcrypt.hash(user.password, Number(process.env.SALT)),
-    roleid: user.roleid,
-    material:user.material
+    material:user.material,
+    roleid: user.roleid
   });
   
 try{
@@ -131,8 +131,23 @@ return  "create new user : " + user.username
 }
 catch (err) {
   return  err;
+}}
+else{
+  const newuser = new student({
+    email: user.email,
+    username: user.username,
+    password: await bcrypt.hash(user.password, Number(process.env.SALT)),
+    class:user.class,
+    roleid: user.roleid
+  });
+try{
+const created = await newuser.save()
+return  "create new user : " + user.username
 }
-
+catch (err) {
+  return  err;
+}
+}
 }
 //************************************************************ */
 // const deleteuser = (user) => {
