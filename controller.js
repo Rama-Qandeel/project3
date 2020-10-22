@@ -5,8 +5,7 @@ const jwt = require("jsonwebtoken");
 const { db, roles } = require("./models");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const { options } = require("./mainRouter");
-const { manager,teacher,student} = require("./users");
-
+const { manager, teacher, student } = require("./users");
 
 // const getall = (user, headers) => {
 //   // console.log("user", user);
@@ -38,8 +37,8 @@ const { manager,teacher,student} = require("./users");
 // };
 //********************************************************** */
 const getall = (user) => {
-  const get=manager.find({email:user.email})
-  return get
+  const get = manager.find({ email: user.email });
+  return get;
 };
 
 //************************************************************* */
@@ -65,46 +64,70 @@ const register = async (user) => {
     password: await bcrypt.hash(user.password, Number(process.env.SALT)),
     roleid: 1,
   });
-  
-try{
-const created = await newmanager.save()
-return  "create new user : " + user.username
-}
-catch (err) {
-  return  err;
-}
 
-}
+  try {
+    const created = await newmanager.save();
+    return "create new user : " + user.username;
+  } catch (err) {
+    return err;
+  }
+};
 
 //************************************************************** */
 // for all
+// const login = async (user) => {
+//   const savedUser = db.filter((u) => u.email == user.email);
+//   console.log("user", savedUser[0]);
+//   if (savedUser.length) {
+//     if (await bcrypt.compare(user.password, savedUser[0].password)) {
+//       const permissions = roles.filter(
+//         (role) => role.id === savedUser[0].roleId
+//       );
+//       const payload = {
+//         email: savedUser[0].email,
+//         permissions: permissions[0].permissions,
+//         id: permissions[0].id,
+//       };
+//       // console.log("pay",payload)
+//       const options = {
+//         expiresIn: process.env.TOKEN_EXPIRATION,
+//       };
+
+//       console.log("process.env.SECRET", process.env.SECRET);
+
+//       return await jwt.sign(payload, process.env.SECRET, options);
+//     } else {
+//       return "Invalid login check your password";
+//     }
+//   } else {
+//     return "Invalid login check your email";
+//   }
+// };
+//*********************************************************** */
 const login = async (user) => {
-  const savedUser = db.filter((u) => u.email == user.email);
-  console.log("user", savedUser[0]);
-  if (savedUser.length) {
-    if (await bcrypt.compare(user.password, savedUser[0].password)) {
-      const permissions = roles.filter(
-        (role) => role.id === savedUser[0].roleId
-      );
-      const payload = {
-        email: savedUser[0].email,
-        permissions: permissions[0].permissions,
-        id: permissions[0].id,
-      };
-      // console.log("pay",payload)
-      const options = {
-        expiresIn: process.env.TOKEN_EXPIRATION,
-      };
+  await manager.find({ email: user.email }, async function (err, docs) {
+    if (docs.length) {
+      if (await bcrypt.compare(user.password, docs[0].password)) {
+        const payload = {
+          email: docs[0].email,
+        };
+        const options = {
+          expiresIn: process.env.TOKEN_EXPIRATION,
+        };
+        const token = await jwt.sign(payload, process.env.SECRET, options);
 
-      console.log("process.env.SECRET", process.env.SECRET);
+        console.log(token);
 
-      return await jwt.sign(payload, process.env.SECRET, options);
+        return token;
+      } else {
+        console.log("Invalid login check your password");
+        return "Invalid login check your password";
+      }
     } else {
-      return "Invalid login check your password";
+      console.log("Invalid login check your email");
+      return "Invalid login check your email";
     }
-  } else {
-    return "Invalid login check your email";
-  }
+  });
 };
 
 //************************************************************* */
@@ -119,41 +142,38 @@ const login = async (user) => {
 //   }
 // };
 //**************************************************************** */
-const adduser = async (user) => { 
-  if(user.roleid==2)
-  {
-  const newuser = new teacher({
-    email: user.email,
-    username: user.username,
-    password: await bcrypt.hash(user.password, Number(process.env.SALT)),
-    material:user.material,
-    roleid: user.roleid
-  });
-  
-try{
-const created = await newuser.save()
-return  "create new user : " + user.username
-}
-catch (err) {
-  return  err;
-}}
-else{
-  const newuser = new student({
-    email: user.email,
-    username: user.username,
-    password: await bcrypt.hash(user.password, Number(process.env.SALT)),
-    class:user.class,
-    roleid: user.roleid
-  });
-try{
-const created = await newuser.save()
-return  "create new user : " + user.username
-}
-catch (err) {
-  return  err;
-}
-}
-}
+const adduser = async (user) => {
+  if (user.roleid == 2) {
+    const newuser = new teacher({
+      email: user.email,
+      username: user.username,
+      password: await bcrypt.hash(user.password, Number(process.env.SALT)),
+      material: user.material,
+      roleid: user.roleid,
+    });
+
+    try {
+      const created = await newuser.save();
+      return "create new user : " + user.username;
+    } catch (err) {
+      return err;
+    }
+  } else {
+    const newuser = new student({
+      email: user.email,
+      username: user.username,
+      password: await bcrypt.hash(user.password, Number(process.env.SALT)),
+      class: user.class,
+      roleid: user.roleid,
+    });
+    try {
+      const created = await newuser.save();
+      return "create new user : " + user.username;
+    } catch (err) {
+      return err;
+    }
+  }
+};
 //************************************************************ */
 // const deleteuser = (user) => {
 //   const deletuser = db.filter((u) => u.email == user.email);
@@ -166,16 +186,13 @@ catch (err) {
 // };
 //**************************************************************** */
 const deleteuser = (user) => {
-try{  
-  const deleteUser=manager.deleteOne({email:user.email})
-return deleteUser
-}
-catch(err){
-  throw err
-}
- }
-
-
+  try {
+    const deleteUser = manager.deleteOne({ email: user.email });
+    return deleteUser;
+  } catch (err) {
+    throw err;
+  }
+};
 
 //************************************************************* */
 const updateinfo = (user) => {
