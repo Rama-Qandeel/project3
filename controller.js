@@ -171,7 +171,7 @@ const adduser = async (user) => {
       const created = await newuser.save();
       return "create new user : " + user.username;
     } catch (err) {
-      return err;
+      return "please change the email";
     }
   }
 };

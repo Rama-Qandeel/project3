@@ -63,12 +63,9 @@ const middleware3 = async (req, res, next) => {
       if (r !== 1) {
         res.status(401);
         res.send(
-          "you can not update informatin" +
-            "\n" +
-            "your permissions just : " +
-            "\n" +
-            JSON.stringify(parsedToken.permissions)
-        );
+          "you can not update informatin or delete ") 
+           
+     
         next();
       }
     }
