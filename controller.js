@@ -110,13 +110,14 @@ const login = async (user) => {
       if (await bcrypt.compare(user.password, docs[0].password)) {
         const payload = {
           email: docs[0].email,
+          roleid:docs[0].roleid
         };
         const options = {
           expiresIn: process.env.TOKEN_EXPIRATION,
         };
         const token = await jwt.sign(payload, process.env.SECRET, options);
 
-        // console.log(token);
+        console.log(token);
 
         return token;
       } else {

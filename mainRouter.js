@@ -33,7 +33,7 @@ authRouter.post("/register", async (req, res) => {
 
 //************************************************************* */
 //for all
-authRouter.get("/login", async (req, res) => {
+authRouter.get("/login", middleware,async (req, res) => {
   try {
     res.json(await login(req.body));
   } catch (err) {
@@ -69,7 +69,7 @@ authRouter.get("/protect",async (req, res) => {
 //   }
 // });
 //************************************************************** */
-authRouter.post("/protect/creatuser", async (req, res) => {
+authRouter.post("/protect/creatuser",middleware2 ,async (req, res) => {
   try {
     res.json(await adduser(req.body));
     // res.json("hiiiiiiiiiiiiiiiiiiiiiiii")
