@@ -8,33 +8,38 @@ const { options } = require("./mainRouter");
 const { manager,teacher,student} = require("./users");
 
 
-const getall = (user, headers) => {
-  // console.log("user", user);
-  // console.log('token',headers.authorization);
-  const token = headers.authorization.split(" ").pop();
-  const decode = jwt_decode(token);
-  // console.log('decode',decode);
+// const getall = (user, headers) => {
+//   // console.log("user", user);
+//   // console.log('token',headers.authorization);
+//   const token = headers.authorization.split(" ").pop();
+//   const decode = jwt_decode(token);
+//   // console.log('decode',decode);
 
-  if (decode.id === 1) {
-    return db;
-  } else if (decode.id === 2) {
-    const student = db.filter((user) => user.roleId === 3);
-    student.forEach((student) => {
-      delete student.password;
-      delete student.roleId;
-    });
+//   if (decode.id === 1) {
+//     return db;
+//   } else if (decode.id === 2) {
+//     const student = db.filter((user) => user.roleId === 3);
+//     student.forEach((student) => {
+//       delete student.password;
+//       delete student.roleId;
+//     });
 
-    return { students: student };
-  } else {
-    let result = [user.material];
-    db.forEach((m) => {
-      if (m.material == user.material) {
-        const time = { username: m.username, time: m.time };
-        result.push(time);
-      }
-    });
-    return result;
-  }
+//     return { students: student };
+//   } else {
+//     let result = [user.material];
+//     db.forEach((m) => {
+//       if (m.material == user.material) {
+//         const time = { username: m.username, time: m.time };
+//         result.push(time);
+//       }
+//     });
+//     return result;
+//   }
+// };
+//********************************************************** */
+const getall = (user) => {
+  const get=manager.find({email:user.email})
+  return get
 };
 
 //************************************************************* */

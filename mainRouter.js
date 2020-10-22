@@ -42,15 +42,23 @@ authRouter.get("/login", async (req, res) => {
 });
 
 //************************************************************* */
-authRouter.get("/protect", middleware, async (req, res) => {
+// authRouter.get("/protect", middleware, async (req, res) => {
+//   try {
+//     res.json(await getall(req.body,req.headers));
+//   } catch (err) {
+//     res.status(404);
+//     throw res.json("Data Base not found");
+//   }
+// });
+/*********************************************************** */
+authRouter.get("/protect",async (req, res) => {
   try {
-    res.json(await getall(req.body,req.headers));
+    res.json(await getall(req.body));
   } catch (err) {
     res.status(404);
     throw res.json("Data Base not found");
   }
 });
-
 //************************************************************* */
 // authRouter.post("/protect/creatuser", middleware2, async (req, res) => {
 //   try {
