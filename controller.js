@@ -36,9 +36,20 @@ const { manager, teacher, student } = require("./users");
 //   }
 // };
 //********************************************************** */
-const getall = (user) => {
-  const get = manager.find({ email: user.email });
-  return get;
+const getall = async(user) => {
+await  manager.find({ email: user.email },async(error,data)=>{
+ 
+ if(error){
+      
+      return error
+    }
+if (data){
+      console.log('data : ',data);
+      
+     return  data
+}
+  })
+  
 };
 
 //************************************************************* */
@@ -106,6 +117,9 @@ const register = async (user) => {
 //*********************************************************** */
 const login = async (user) => {
   await manager.find({ email: user.email }, async function (err, docs) {
+    
+    console.log('docs : ',docs);
+    
     if (docs.length) {
       if (await bcrypt.compare(user.password, docs[0].password)) {
         const payload = {
@@ -121,11 +135,11 @@ const login = async (user) => {
 
         return token;
       } else {
-        // console.log("Invalid login check your password");
+        console.log("Invalid login check your password");
         return "Invalid login check your password";
       }
     } else {
-      // console.log("Invalid login check your email");
+      console.log("Invalid login check your email");
       return "Invalid login check your email";
     }
   });
